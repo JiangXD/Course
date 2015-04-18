@@ -1,0 +1,88 @@
+---
+title: "常见统计问题讨论（2）"
+subtitle: "One-tailed & Two-tailed Tests"
+author: "姜晓东"
+date: "`r Sys.Date()`"
+
+output:
+    beamer_presentation:
+        slide_level: 2
+        theme: CambridgeUS
+        keep_tex: no
+        pandoc_args: --latex-engine=xelatex
+        includes:
+            in_header: header.tex
+    md_document:
+         variant: markdown_github
+---
+
+##单尾和双尾检验
+\tableofcontents
+
+# 从假设检验谈起
+## 天蝎计划
+\noindent\includegraphics[width=\textwidth]{pics/Scorpion.jpg}
+\begin{picture}(0,0)(0,0)
+\put(4,200){\color{yellow}$<$/{\large\textbf{\color{darkred}SCORPION}}\color{yellow}$>$}
+\put(100,100){\colorbox{white}{\parbox[t]{2.8cm}{\textbf{Walter O'Brien}\newline with IQ of \textcolor{red}{197}.}}}
+\end{picture}
+
+## 智商分布
+```{r, echo=FALSE, fig.height=6, fig.width=9, fig.showtext=TRUE}
+library(ggplot2, quietly=TRUE)
+library(showtext, quietly=TRUE)
+
+mydat=data.frame(x=seq(0,200,0.1))
+mydat$y=dnorm(mydat$x,mean=100,sd=15)
+pic=ggplot(mydat) + geom_line(aes(x,y), colour="red", size=0.3) +
+                    labs(x="IQ Index", y="Density") +
+                    theme_minimal()
+
+print(pic)
+
+```
+
+## 智商分布
+```{r, echo=FALSE, fig.height=6, fig.width=9, fig.showtext=TRUE}
+mynames=data.frame(names=c("鄙人","诸位","门萨\n俱乐部","Walter"),
+                   x=c(125,130,148,197),
+                   y=c(0.015, 0.01,0.01, 0.01));
+pic = pic + geom_text(aes(x,y,label=names), data=mynames) +
+            geom_segment(aes(x=x,y=y,xend=x,yend=0), linetype=3, 
+                         colour="blue", data=mynames)
+
+print(pic)
+```
+
+
+## 智商分布
+```{r, echo=FALSE, fig.height=6, fig.width=9, fig.showtext=TRUE}
+mynewdat=subset(mydat, x<70.6)
+mynewdat2=subset(mydat, x>129.4)
+pic2 = pic + geom_ribbon(aes(x,ymax=y),ymin=0,fill="yellow", alpha=0.5, data=mynewdat)+
+             geom_ribbon(aes(x,ymax=y),ymin=0,fill="yellow", alpha=0.5, data=mynewdat2)+
+             scale_x_continuous(breaks=c(0,50,70.6,100,129.4,150,200))
+print(pic2)
+
+```
+
+## 智商分布
+```{r, echo=FALSE, fig.height=6, fig.width=9, fig.showtext=TRUE}
+mynewdat2=subset(mydat, x>124.7)
+pic2 = pic + geom_ribbon(aes(x,ymax=y),ymin=0,fill="orange", alpha=0.5, data=mynewdat2)+
+             scale_x_continuous(breaks=c(0,50,100,124.7,150,200))
+print(pic2)
+
+```
+
+# 实际取舍
+## 实际取舍
++ 双尾检验
+	- 比较”是否一致“
+	- 保守、严格
++ 单尾检验
+	- 有明确的方向比较，大小、强弱
+	- 灵敏，更容易出现阳性结果
++ 默认最好选择双尾检验
+
+
