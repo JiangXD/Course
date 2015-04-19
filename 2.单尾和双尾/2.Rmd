@@ -102,6 +102,7 @@ ggplot(mydat) + geom_line(aes(x,y)) +
 \end{align*}
  }
 }
+\put(300,220){\includegraphics[width=2.5cm]{pics/Gosset.jpg}}
 \end{picture}
 
 
