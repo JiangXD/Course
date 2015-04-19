@@ -116,3 +116,7 @@ ggplot(mydat) + geom_line(aes(x,y)) +
 + 默认最好选择双尾检验
 
 
+## Thanks for your attention!
+
+[https://github.com/JiangXD/Course](https://github.com/JiangXD/Course) 
+
