@@ -75,6 +75,36 @@ print(pic2)
 
 ```
 
+## 2个样本t检验
+```{r, echo=FALSE, fig.height=6, fig.width=9, fig.showtext=TRUE}
+mydat=data.frame(x=c(1,2), y=c(55,63), se=c(6,8))
+ggplot(mydat) + geom_bar(aes(x=factor(x),y=y), stat="identity", colour="black", width=.3) + 
+                geom_errorbar(aes(x=x, ymin=y, ymax=y+se), width=.1) +
+                labs(x="", y="") + theme_minimal()
+
+```
+
+## 2个样本t检验
+```{r, echo=FALSE, fig.height=6, fig.width=9, fig.showtext=TRUE}
+mydat=data.frame(x=seq(-3,18,0.02))
+mydat$y=dnorm(mydat$x, mean=63-55, sd=3)
+ggplot(mydat) + geom_line(aes(x,y)) + 
+                geom_vline(xintercept=0, colour="red", linetype=2, size=2) +
+                theme_minimal()
+
+```
+\begin{picture}(0,0)(0,0)
+\put(190,200){\color{blue}
+\parbox[t]{5cm}{
+\begin{align*}
+\mu &= \bar{x_1} - \bar{x_2}\\
+\sigma &= \sqrt{\frac{S_e^2}{n_1}+ \frac{S_e^2}{n_2}}
+\end{align*}
+ }
+}
+\end{picture}
+
+
 # 实际取舍
 ## 实际取舍
 + 双尾检验
