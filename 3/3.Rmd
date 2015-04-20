@@ -1,0 +1,65 @@
+---
+title: "常见统计问题讨论（3）"
+subtitle: "Analysis of Variance (ANOVA)"
+author: "姜晓东"
+date: "`r Sys.Date()`"
+
+output:
+    beamer_presentation:
+        slide_level: 2
+        theme: CambridgeUS
+        keep_tex: no
+        pandoc_args: --latex-engine=xelatex
+        includes:
+            in_header: header.tex
+    md_document:
+         variant: markdown_github
+---
+
+##ANOVA
+\tableofcontents
+
+# 案例讨论
+## 案例讨论
+```{r echo=FALSE, fig.showtext=TRUE}
+library(ggplot2, quietly=TRUE)
+
+mydat=data.frame(value=c(55,63,83,110),
+                 sem=c(8,12,11,15),
+                 drug=factor(c("A","B","A","B")),
+                 phase=factor(c(1,1,2,2)))
+pic=ggplot(mydat) + geom_bar(aes(x=phase, y=value, group=drug, fill=drug), 
+                             width=0.5, position="dodge", stat="identity") + 
+                    xlab("") + 
+                    scale_y_continuous(breaks=seq(0,120,30), limits=c(0,120)) 
+pic1=pic + scale_x_discrete(labels=c("1"="给药前", "2"="给药后"))
+print(pic1)
+
+``` 
+
+
+## 案例讨论
+```{r echo=FALSE, fig.showtext=TRUE}
+pic2=pic + scale_x_discrete(labels=c("1"="对照组", "2"="给药组")) +
+           theme_minimal() +
+           theme(axis.text.x=element_text(colour="red"))
+print(pic2)
+
+```
+
+
+## 案例讨论
+```{r echo=FALSE, fig.showtext=TRUE}
+print(pic1)
+```
+
+\begin{picture}(0,0)(0,0)
+\put(70,234){\color{gray}双因素方差分析}
+
+\end{picture}
+
+
+
+
+
+
